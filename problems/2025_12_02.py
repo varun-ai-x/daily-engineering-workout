@@ -1,4 +1,6 @@
 from collections import defaultdict
+import heapq
+import random
 
 class Leetcode:
     """
@@ -103,10 +105,25 @@ class Leetcode:
     Constraints:
       - 1 <= k <= len(nums)
     """
-    def find_kth_largest(self, nums: list[int], k: int) -> int:
+    def find_kth_largest_heap(self, nums: list[int], k: int) -> int:
         # Expected Time: O(n) average with Quickselect or O(n log k) with heap
         # Expected Space: O(1) for Quickselect or O(k) for heap
-        pass
+        min_heap = []
+
+        for num in nums:
+            heapq.heappush(min_heap, num)
+            if len(min_heap) > k:
+                heapq.heappop(min_heap)        
+        return min_heap[0]
+    
+    def find_kth_largest_quick_select(self, nums):
+        target = len(nums) - k
+        def quickselect(l, r):
+            pivot_idx = random.randint(l, r)
+            nums[pivot_idx], nums[r] = nums[r], nums[pivot_idx]
+
+            
+
 
 
     # ---------------------------------------------------------
@@ -242,21 +259,21 @@ if __name__ == "__main__":
     # # 1️⃣ Binary Tree Right Side View
     # print("1: right_side_view →", lc.right_side_view(None))  # build a real tree when testing
 
-    # 2️⃣ Error Rate per Endpoint
-    logs_example = [
-        ("/api/users", 200),
-        ("/api/users", 500),
-        ("/api/users", 404),
-        ("/api/orders", 200),
-        ("/api/orders", 201),
-        ("/api/orders", 503),
-    ]
-    print("2: error_rate_per_endpoint →",
-          lc.error_rate_per_endpoint_optimal_storage(logs_example))
+    # # 2️⃣ Error Rate per Endpoint
+    # logs_example = [
+    #     ("/api/users", 200),
+    #     ("/api/users", 500),
+    #     ("/api/users", 404),
+    #     ("/api/orders", 200),
+    #     ("/api/orders", 201),
+    #     ("/api/orders", 503),
+    # ]
+    # print("2: error_rate_per_endpoint →",
+    #       lc.error_rate_per_endpoint_optimal_storage(logs_example))
 
-    # # 3️⃣ Kth Largest Element
-    # print("3: find_kth_largest →",
-    #       lc.find_kth_largest([3,2,1,5,6,4], 2))
+    # 3️⃣ Kth Largest Element
+    print("3: find_kth_largest →",
+          lc.find_kth_largest_heap([3,2,1,5,6,4], 2))
 
     # # 4️⃣ Daily Revenue per Country
     # events_example = [
